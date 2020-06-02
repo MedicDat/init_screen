@@ -2,6 +2,7 @@ name: init_screen
 description: An easy to use, multipurpose init screen to introduce your app
 version: 0.0.1
 author: Korbinian Habereder
+homepage: https://github.com/MedicDat/init_screen
 
 environment:
   sdk: ">=2.7.0 <3.0.0"
