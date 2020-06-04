@@ -1,3 +1,6 @@
-## [0.0.1] - TODO: Add release date.
+## [1.0.0] - 04.06.2020
 
-* TODO: Describe initial release.
+# Initial Release
+- added InitScreen class
+- added customization possibilities
+- added examples
