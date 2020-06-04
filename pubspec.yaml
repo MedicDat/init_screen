@@ -1,7 +1,6 @@
 name: init_screen
 description: An easy to use, multipurpose init screen to introduce your app
 version: 1.1.0
-author: Korbinian Habereder
 homepage: https://github.com/MedicDat/init_screen
 
 environment:
@@ -10,7 +9,7 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  material_design_icons_flutter: any
+  material_design_icons_flutter: ^4.0.5345
 
 dev_dependencies:
   flutter_test:
