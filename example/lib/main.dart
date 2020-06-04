@@ -51,7 +51,8 @@ class _MyHomePageState extends State<MyHomePage> {
 
     _buildSimple() {
         return InitScreen(
-            [Text("hi"), Text("am"), Text("simple")]
+            [Text("hi"), Text("am"), Text("simple")],
+            showNavHelpers: true,
         );
     }
 

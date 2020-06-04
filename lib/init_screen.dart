@@ -14,15 +14,23 @@ class InitScreen extends StatefulWidget{
     /// should not be changed
     final int sensitivity;
     final bool showNavButtons;
+    final bool showNavHelpers;
+    final String navHelperEndText;
+    final Icon navHelperIconLeft;
+    final Icon navHelperIconRight;
     final Function customNavButtonBuilder;
     final FloatingActionButtonLocation navBtnLocation;
 
     InitScreen(this.children, {
         this.key,
-        this.stepIcon = const Icon(MdiIcons.circleSlice8),
+        this.stepIcon = const Icon(MdiIcons.circle),
         this.noGoBack = false,
         this.sensitivity = 1000,
         this.showNavButtons = true,
+        this.showNavHelpers = false,
+        this.navHelperEndText = "Done",
+        this.navHelperIconLeft = const Icon(Icons.chevron_left),
+        this.navHelperIconRight = const Icon(Icons.chevron_right),
         this.customNavButtonBuilder,
         this.navBtnLocation = FloatingActionButtonLocation.centerDocked
     }) : super(key: key);
@@ -30,6 +38,8 @@ class InitScreen extends StatefulWidget{
     @override
     State<StatefulWidget> createState() => InitScreenState(this.children, this.stepIcon,
                                                 this.noGoBack, this.sensitivity, this.showNavButtons,
+                                                this.showNavHelpers, this.navHelperEndText,
+                                                this.navHelperIconLeft, this.navHelperIconRight,
                                                 this.customNavButtonBuilder, this.navBtnLocation);
 
 }
@@ -41,13 +51,19 @@ class InitScreenState extends State<InitScreen> {
     final bool _noGoBack;
     final int _sensitivity;
     final bool _showNavButtons;
+    final bool _showNavHelpers;
+    final String _navHelperEndText;
+    final Icon _navHelperIconLeft;
+    final Icon _navHelperIconRight;
     final Function _customNavButtonBuilder;
     final FloatingActionButtonLocation _navBtnLocation;
     int _currentIndex = 0;
 
     InitScreenState(this._children, this._stepIcon, this._noGoBack,
-        this._sensitivity, this._showNavButtons, this._customNavButtonBuilder,
-        this._navBtnLocation);
+        this._sensitivity, this._showNavButtons, this._showNavHelpers,
+        this._navHelperEndText, this._navHelperIconLeft, this._navHelperIconRight,
+        this._customNavButtonBuilder, this._navBtnLocation)
+        : assert(_navHelperEndText.length < 8);
 
     @override
     initState() {
@@ -71,6 +87,45 @@ class InitScreenState extends State<InitScreen> {
         );
     }
 
+    // build NavButton container
+    _buildNavBtnRow() {
+        return Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: [
+                if (!_noGoBack && _showNavHelpers)
+                    SizedBox(
+                        width: 30,
+                        child: IconButton(
+                            icon: _navHelperIconLeft,
+                            onPressed: () => navBtnClick(_currentIndex - 1),
+                        )
+                    ),
+                if (_noGoBack) // hacky
+                    SizedBox(
+                        width: 30,
+                    ),
+                Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: _buildStepButtonList(),
+                ),
+                if (_showNavHelpers)
+                    if (_currentIndex == _children.length - 1)
+                        SizedBox(
+                            width: 30,
+                            child: Text(_navHelperEndText),
+                        )
+                    else
+                        SizedBox(
+                            width: 30,
+                            child: IconButton(
+                                icon: _navHelperIconRight,
+                                onPressed: () => navBtnClick(_currentIndex + 1),
+                            ),
+                        )
+            ],
+        );
+    }
+
     @override
     build(BuildContext context) {
         return SafeArea(
@@ -88,10 +143,7 @@ class InitScreenState extends State<InitScreen> {
                 ),
                 floatingActionButtonLocation: _navBtnLocation,
                 floatingActionButton: _showNavButtons ?
-                Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: _buildStepButtonList(),
-                ) :
+                _buildNavBtnRow() :
                 null
                 ,
             ),
