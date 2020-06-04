@@ -26,6 +26,8 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
 
     final GlobalKey<InitScreenState> _key = GlobalKey();
+    final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+    var _controller = TextEditingController();
 
     _buildAGB() {
         return SingleChildScrollView(
@@ -38,7 +40,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
     _buildWithCustomNavs() {
         return InitScreen(
-            [Text("test"), _buildAGB(), Text("[3]")],
+            children: [Text("test"), _buildAGB(), Text("[3]")],
             key: _key, // needed for callback
             customNavButtonBuilder: (index) { // custom NavButton builder
                 return IconButton(
@@ -48,16 +50,41 @@ class _MyHomePageState extends State<MyHomePage> {
             },
         );
     }
+    
+    _buildWithValidator() {
+        return InitScreen(
+            children: [
+                Padding(
+                    padding: EdgeInsets.only(left: 64, right: 64),
+                    child: Center(
+                        child: Form(
+                            key: _formKey,
+                            child: TextFormField(
+                                controller: _controller,
+                                validator: (val) {
+                                    if (val.isEmpty)
+                                        return "Must not be empty!";
+                                    return null;
+                                },
+                            ),
+                        ),
+                    ),
+                ),
+                Text("Hey you reached me!")
+            ],
+            validatorKey: _formKey,
+        );
+    }
 
     _buildSimple() {
         return InitScreen(
-            [Text("hi"), Text("am"), Text("simple")],
+            children: [Text("hi"), Text("am"), Text("simple")],
             showNavHelpers: true,
         );
     }
 
     @override
     Widget build(BuildContext context) {
-        return _buildSimple();
+        return _buildWithValidator();
     }
 }

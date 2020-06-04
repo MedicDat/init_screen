@@ -19,9 +19,11 @@ class InitScreen extends StatefulWidget{
     final Icon navHelperIconLeft;
     final Icon navHelperIconRight;
     final Function customNavButtonBuilder;
+    final GlobalKey<FormState> validatorKey;
     final FloatingActionButtonLocation navBtnLocation;
 
-    InitScreen(this.children, {
+    InitScreen({
+        @required this.children,
         this.key,
         this.stepIcon = const Icon(MdiIcons.circle),
         this.noGoBack = false,
@@ -32,7 +34,8 @@ class InitScreen extends StatefulWidget{
         this.navHelperIconLeft = const Icon(Icons.chevron_left),
         this.navHelperIconRight = const Icon(Icons.chevron_right),
         this.customNavButtonBuilder,
-        this.navBtnLocation = FloatingActionButtonLocation.centerDocked
+        this.navBtnLocation = FloatingActionButtonLocation.centerDocked,
+        this.validatorKey
     }) : super(key: key);
 
     @override
@@ -40,7 +43,8 @@ class InitScreen extends StatefulWidget{
                                                 this.noGoBack, this.sensitivity, this.showNavButtons,
                                                 this.showNavHelpers, this.navHelperEndText,
                                                 this.navHelperIconLeft, this.navHelperIconRight,
-                                                this.customNavButtonBuilder, this.navBtnLocation);
+                                                this.customNavButtonBuilder, this.navBtnLocation,
+                                                this.validatorKey);
 
 }
 
@@ -57,12 +61,13 @@ class InitScreenState extends State<InitScreen> {
     final Icon _navHelperIconRight;
     final Function _customNavButtonBuilder;
     final FloatingActionButtonLocation _navBtnLocation;
+    final GlobalKey<FormState> _validator;
     int _currentIndex = 0;
 
     InitScreenState(this._children, this._stepIcon, this._noGoBack,
         this._sensitivity, this._showNavButtons, this._showNavHelpers,
         this._navHelperEndText, this._navHelperIconLeft, this._navHelperIconRight,
-        this._customNavButtonBuilder, this._navBtnLocation)
+        this._customNavButtonBuilder, this._navBtnLocation, this._validator)
         : assert(_navHelperEndText.length < 8);
 
     @override
@@ -152,26 +157,31 @@ class InitScreenState extends State<InitScreen> {
 
     // public callback method
     navBtnClick(int index) {
-        if (_noGoBack && index < _currentIndex)
-            return;
-        setState(() {
-            _currentIndex = index;
-        });
+        if (_validator?.currentState?.validate() ?? true) {
+            if (_noGoBack && index < _currentIndex)
+                return;
+            setState(() {
+                _currentIndex = index;
+            });
+        }
     }
 
     _userSwiped(DragEndDetails details) {
-        if (details.primaryVelocity.abs() < _sensitivity)
-            return;
-        var newIndex = _currentIndex + (details.primaryVelocity > 0 ? -1 : 1);
-        if (_noGoBack && details.primaryVelocity > 0)
-            return;
-        if (newIndex > _children.length - 1)
-            return;
-        if (newIndex < 0)
-            return;
-        setState(() {
-            _currentIndex = newIndex;
-        });
+        // yeah...
+        if (_validator?.currentState?.validate() ?? true) {
+            if (details.primaryVelocity.abs() < _sensitivity)
+                return;
+            var newIndex = _currentIndex + (details.primaryVelocity > 0 ? -1 : 1);
+            if (_noGoBack && details.primaryVelocity > 0)
+                return;
+            if (newIndex > _children.length - 1)
+                return;
+            if (newIndex < 0)
+                return;
+            setState(() {
+                _currentIndex = newIndex;
+            });
+        }
     }
 
 }
