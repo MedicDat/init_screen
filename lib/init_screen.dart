@@ -104,8 +104,8 @@ class InitScreenState extends State<InitScreen> {
                             icon: _navHelperIconLeft,
                             onPressed: () => navBtnClick(_currentIndex - 1),
                         )
-                    ),
-                if (_noGoBack) // hacky
+                    )
+                else
                     SizedBox(
                         width: 30,
                     ),
@@ -127,6 +127,10 @@ class InitScreenState extends State<InitScreen> {
                                 onPressed: () => navBtnClick(_currentIndex + 1),
                             ),
                         )
+                else
+                    SizedBox(
+                        width: 30,
+                    )
             ],
         );
     }

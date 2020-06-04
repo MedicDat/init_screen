@@ -1,3 +1,13 @@
+## [1.2.1] - 04.06.2020
+
+# Fix Navigation Helpers
+- fixed positioning if nav helpers are not shown
+
+## [1.2.0] - 04.06.2020
+
+# Feature Navigation Helpers
+- added validation as parameter if you already can change the page
+
 ## [1.1.0] - 04.06.2020
 
 # Feature Navigation Helpers
