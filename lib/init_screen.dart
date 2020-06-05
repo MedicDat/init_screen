@@ -15,6 +15,7 @@ class InitScreen extends StatefulWidget{
     final int sensitivity;
     final bool showNavButtons;
     final Function customNavButtonBuilder;
+    final Color backgroundColor;
     final FloatingActionButtonLocation navBtnLocation;
 
     InitScreen(this.children, {
@@ -24,13 +25,15 @@ class InitScreen extends StatefulWidget{
         this.sensitivity = 1000,
         this.showNavButtons = true,
         this.customNavButtonBuilder,
+        this.backgroundColor = Colors.transparent,
         this.navBtnLocation = FloatingActionButtonLocation.centerDocked
     }) : super(key: key);
 
     @override
     State<StatefulWidget> createState() => InitScreenState(this.children, this.stepIcon,
                                                 this.noGoBack, this.sensitivity, this.showNavButtons,
-                                                this.customNavButtonBuilder, this.navBtnLocation);
+                                                this.customNavButtonBuilder, this.backgroundColor,
+                                                this.navBtnLocation);
 
 }
 
@@ -42,12 +45,13 @@ class InitScreenState extends State<InitScreen> {
     final int _sensitivity;
     final bool _showNavButtons;
     final Function _customNavButtonBuilder;
+    final Color _backgroundColor;
     final FloatingActionButtonLocation _navBtnLocation;
     int _currentIndex = 0;
 
     InitScreenState(this._children, this._stepIcon, this._noGoBack,
         this._sensitivity, this._showNavButtons, this._customNavButtonBuilder,
-        this._navBtnLocation);
+        this._backgroundColor ,this._navBtnLocation);
 
     @override
     initState() {
@@ -81,8 +85,11 @@ class InitScreenState extends State<InitScreen> {
                     child: SizedBox(
                         height: MediaQuery.of(context).size.height,
                         width: MediaQuery.of(context).size.width,
-                        child: Center(
-                            child: _children[_currentIndex]
+                        child: Container(
+                            color: _backgroundColor,
+                            child: Center(
+                                child: _children[_currentIndex]
+                            ),
                         ),
                     ),
                 ),
