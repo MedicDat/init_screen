@@ -20,6 +20,8 @@ class InitScreen extends StatefulWidget{
     final Icon navHelperIconRight;
     final Function customNavButtonBuilder;
     final Color backgroundColor;
+    final Color navBtnFocusedColor;
+    final Color navBtnUnfocusedColor;
     final GlobalKey<FormState> validatorKey;
     final FloatingActionButtonLocation navBtnLocation;
 
@@ -31,11 +33,13 @@ class InitScreen extends StatefulWidget{
         this.sensitivity = 1000,
         this.showNavButtons = true,
         this.showNavHelpers = false,
-        this.navHelperEndText = "Done",
+        this.navHelperEndText = "DONE",
         this.navHelperIconLeft = const Icon(Icons.chevron_left),
         this.navHelperIconRight = const Icon(Icons.chevron_right),
         this.customNavButtonBuilder,
         this.backgroundColor = Colors.transparent,
+        this.navBtnFocusedColor = Colors.white,
+        this.navBtnUnfocusedColor = Colors.grey,
         this.navBtnLocation = FloatingActionButtonLocation.centerDocked,
         this.validatorKey
     }) : super(key: key);
@@ -46,6 +50,7 @@ class InitScreen extends StatefulWidget{
                                                 this.showNavHelpers, this.navHelperEndText,
                                                 this.navHelperIconLeft, this.navHelperIconRight,
                                                 this.customNavButtonBuilder, this.backgroundColor,
+                                                this.navBtnFocusedColor, this.navBtnUnfocusedColor,
                                                 this.navBtnLocation, this.validatorKey);
 
 }
@@ -63,6 +68,8 @@ class InitScreenState extends State<InitScreen> {
     final Icon _navHelperIconRight;
     final Function _customNavButtonBuilder;
     final Color _backgroundColor;
+    final Color _navBtnFocusedColor;
+    final Color _navBtnUnfocusedColor;
     final FloatingActionButtonLocation _navBtnLocation;
     final GlobalKey<FormState> _validator;
     int _currentIndex = 0;
@@ -71,6 +78,7 @@ class InitScreenState extends State<InitScreen> {
         this._sensitivity, this._showNavButtons, this._showNavHelpers,
         this._navHelperEndText, this._navHelperIconLeft, this._navHelperIconRight,
         this._customNavButtonBuilder, this._backgroundColor,
+        this._navBtnFocusedColor, this._navBtnUnfocusedColor,
         this._navBtnLocation, this._validator)
         : assert(_navHelperEndText.length < 8);
 
@@ -82,7 +90,7 @@ class InitScreenState extends State<InitScreen> {
     // build single step button
     _buildStepButton(int index) {
         return _customNavButtonBuilder != null ? _customNavButtonBuilder(index) : IconButton(
-            color: _currentIndex == index ? Colors.grey[700] : Colors.grey,
+            color: _currentIndex == index ? _navBtnFocusedColor : _navBtnUnfocusedColor,
             onPressed: () => navBtnClick(index),
             icon: _stepIcon,
         );
@@ -103,7 +111,7 @@ class InitScreenState extends State<InitScreen> {
             children: [
                 if (!_noGoBack && _showNavHelpers)
                     SizedBox(
-                        width: 30,
+                        width: 40,
                         child: IconButton(
                             icon: _navHelperIconLeft,
                             onPressed: () => navBtnClick(_currentIndex - 1),
@@ -120,12 +128,12 @@ class InitScreenState extends State<InitScreen> {
                 if (_showNavHelpers)
                     if (_currentIndex == _children.length - 1)
                         SizedBox(
-                            width: 30,
+                            width: 40,
                             child: Text(_navHelperEndText),
                         )
                     else
                         SizedBox(
-                            width: 30,
+                            width: 40,
                             child: IconButton(
                                 icon: _navHelperIconRight,
                                 onPressed: () => navBtnClick(_currentIndex + 1),
@@ -133,7 +141,7 @@ class InitScreenState extends State<InitScreen> {
                         )
                 else
                     SizedBox(
-                        width: 30,
+                        width: 40,
                     )
             ],
         );

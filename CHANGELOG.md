@@ -1,11 +1,18 @@
-<<<<<<< HEAD
+## [1.2.4] - 05.06.2020
+
+# Feature nav btn color
+- added option to only change the nav btn color
+
+## [1.2.3] - 05.06.2020
+
+# Fix Merge conflict
+- messed up merge, now fixed :+1:
+
 ## [1.2.2] - 05.06.2020
 
 # Feature background color
 - yeah added background colors
 
-=======
->>>>>>> 89f7a5bbea5e51c8fe1c69174c9c233009b68688
 ## [1.2.1] - 04.06.2020
 
 # Fix Navigation Helpers

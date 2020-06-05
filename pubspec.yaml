@@ -1,6 +1,6 @@
 name: init_screen
 description: An easy to use, multipurpose init screen to introduce your app
-version: 1.2.2
+version: 1.2.4
 homepage: https://github.com/MedicDat/init_screen
 
 environment:
