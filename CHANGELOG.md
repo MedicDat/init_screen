@@ -1,3 +1,8 @@
+## [1.3.0] - 05.06.2020
+
+# Feature nav bar
+- added optional nav bar -> can't be used together with nav buttons
+
 ## [1.2.4] - 05.06.2020
 
 # Feature nav btn color

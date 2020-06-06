@@ -13,13 +13,19 @@ class InitScreen extends StatefulWidget{
     final bool noGoBack;
     /// should not be changed
     final int sensitivity;
-    final bool showNavButtons;
     final bool showNavHelpers;
+
+    /// those two must not be true at the same time
+    final bool showNavButtons;
+    final bool showNavBar;
+
     final String navHelperEndText;
     final Icon navHelperIconLeft;
     final Icon navHelperIconRight;
     final Function customNavButtonBuilder;
     final Color backgroundColor;
+    /// color of the static nav bar
+    final Color barColor;
     final Color navBtnFocusedColor;
     final Color navBtnUnfocusedColor;
     final GlobalKey<FormState> validatorKey;
@@ -33,11 +39,13 @@ class InitScreen extends StatefulWidget{
         this.sensitivity = 1000,
         this.showNavButtons = true,
         this.showNavHelpers = false,
+        this.showNavBar = false,
         this.navHelperEndText = "DONE",
         this.navHelperIconLeft = const Icon(Icons.chevron_left),
         this.navHelperIconRight = const Icon(Icons.chevron_right),
         this.customNavButtonBuilder,
         this.backgroundColor = Colors.transparent,
+        this.barColor = Colors.black,
         this.navBtnFocusedColor = Colors.white,
         this.navBtnUnfocusedColor = Colors.grey,
         this.navBtnLocation = FloatingActionButtonLocation.centerDocked,
@@ -45,13 +53,24 @@ class InitScreen extends StatefulWidget{
     }) : super(key: key);
 
     @override
-    State<StatefulWidget> createState() => InitScreenState(this.children, this.stepIcon,
-                                                this.noGoBack, this.sensitivity, this.showNavButtons,
-                                                this.showNavHelpers, this.navHelperEndText,
-                                                this.navHelperIconLeft, this.navHelperIconRight,
-                                                this.customNavButtonBuilder, this.backgroundColor,
-                                                this.navBtnFocusedColor, this.navBtnUnfocusedColor,
-                                                this.navBtnLocation, this.validatorKey);
+    State<StatefulWidget> createState() => InitScreenState(
+        this.children,
+        this.stepIcon,
+        this.noGoBack,
+        this.sensitivity,
+        this.showNavButtons,
+        this.showNavHelpers,
+        this.showNavBar,
+        this.navHelperEndText,
+        this.navHelperIconLeft,
+        this.navHelperIconRight,
+        this.customNavButtonBuilder,
+        this.backgroundColor,
+        this.barColor,
+        this.navBtnFocusedColor,
+        this.navBtnUnfocusedColor,
+        this.navBtnLocation,
+        this.validatorKey);
 
 }
 
@@ -63,29 +82,38 @@ class InitScreenState extends State<InitScreen> {
     final int _sensitivity;
     final bool _showNavButtons;
     final bool _showNavHelpers;
+    final bool _showNavBar;
     final String _navHelperEndText;
     final Icon _navHelperIconLeft;
     final Icon _navHelperIconRight;
     final Function _customNavButtonBuilder;
     final Color _backgroundColor;
+    final Color _barColor;
     final Color _navBtnFocusedColor;
     final Color _navBtnUnfocusedColor;
     final FloatingActionButtonLocation _navBtnLocation;
     final GlobalKey<FormState> _validator;
     int _currentIndex = 0;
 
-    InitScreenState(this._children, this._stepIcon, this._noGoBack,
-        this._sensitivity, this._showNavButtons, this._showNavHelpers,
-        this._navHelperEndText, this._navHelperIconLeft, this._navHelperIconRight,
-        this._customNavButtonBuilder, this._backgroundColor,
-        this._navBtnFocusedColor, this._navBtnUnfocusedColor,
-        this._navBtnLocation, this._validator)
-        : assert(_navHelperEndText.length < 8);
-
-    @override
-    initState() {
-        super.initState();
-    }
+    InitScreenState(
+        this._children,
+        this._stepIcon,
+        this._noGoBack,
+        this._sensitivity,
+        this._showNavButtons,
+        this._showNavHelpers,
+        this._showNavBar,
+        this._navHelperEndText,
+        this._navHelperIconLeft,
+        this._navHelperIconRight,
+        this._customNavButtonBuilder,
+        this._backgroundColor,
+        this._barColor,
+        this._navBtnFocusedColor,
+        this._navBtnUnfocusedColor,
+        this._navBtnLocation,
+        this._validator)
+        : assert(_navHelperEndText.length < 8), assert(!(_showNavBar && _showNavButtons));
 
     // build single step button
     _buildStepButton(int index) {
@@ -159,14 +187,28 @@ class InitScreenState extends State<InitScreen> {
                         width: MediaQuery.of(context).size.width,
                         child: Container(
                             color: _backgroundColor,
-                            child: Center(
-                                child: _children[_currentIndex]
+                            child: Stack(
+                                children: [
+                                    Center(
+                                        child: _children[_currentIndex]
+                                    ),
+                                    if (!_showNavButtons && _showNavBar)
+                                        Positioned(
+                                            bottom: 0,
+                                            child: Container(
+                                                color: _barColor,
+                                                height: 56,
+                                                width: MediaQuery.of(context).size.width,
+                                                child: _buildNavBtnRow()
+                                            ),
+                                        )
+                                ],
                             ),
                         ),
                     ),
                 ),
                 floatingActionButtonLocation: _navBtnLocation,
-                floatingActionButton: _showNavButtons ?
+                floatingActionButton: _showNavButtons && !_showNavBar ?
                 _buildNavBtnRow() :
                 null
                 ,

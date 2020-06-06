@@ -80,6 +80,8 @@ class _MyHomePageState extends State<MyHomePage> {
         return InitScreen(
             children: [Text("hi"), Text("am"), Text("simple")],
             showNavHelpers: true,
+            showNavBar: true,
+            showNavButtons: false,
         );
     }
 
