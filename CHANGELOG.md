@@ -1,3 +1,8 @@
+## [1.3.1] - 07.06.2020
+
+# Feature nav helper end text modification
+- nav helper end text now must be text widget -> easier to modify
+
 ## [1.3.0] - 05.06.2020
 
 # Feature nav bar

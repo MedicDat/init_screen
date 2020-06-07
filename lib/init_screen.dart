@@ -19,7 +19,7 @@ class InitScreen extends StatefulWidget{
     final bool showNavButtons;
     final bool showNavBar;
 
-    final String navHelperEndText;
+    final Text navHelperEndText;
     final Icon navHelperIconLeft;
     final Icon navHelperIconRight;
     final Function customNavButtonBuilder;
@@ -40,7 +40,7 @@ class InitScreen extends StatefulWidget{
         this.showNavButtons = true,
         this.showNavHelpers = false,
         this.showNavBar = false,
-        this.navHelperEndText = "DONE",
+        this.navHelperEndText = const Text("DONE", style: TextStyle(color: Colors.white)),
         this.navHelperIconLeft = const Icon(Icons.chevron_left),
         this.navHelperIconRight = const Icon(Icons.chevron_right),
         this.customNavButtonBuilder,
@@ -83,7 +83,7 @@ class InitScreenState extends State<InitScreen> {
     final bool _showNavButtons;
     final bool _showNavHelpers;
     final bool _showNavBar;
-    final String _navHelperEndText;
+    final Text _navHelperEndText;
     final Icon _navHelperIconLeft;
     final Icon _navHelperIconRight;
     final Function _customNavButtonBuilder;
@@ -113,7 +113,7 @@ class InitScreenState extends State<InitScreen> {
         this._navBtnUnfocusedColor,
         this._navBtnLocation,
         this._validator)
-        : assert(_navHelperEndText.length < 8), assert(!(_showNavBar && _showNavButtons));
+        : assert(_navHelperEndText.data.length < 8), assert(!(_showNavBar && _showNavButtons));
 
     // build single step button
     _buildStepButton(int index) {
@@ -157,7 +157,7 @@ class InitScreenState extends State<InitScreen> {
                     if (_currentIndex == _children.length - 1)
                         SizedBox(
                             width: 40,
-                            child: Text(_navHelperEndText),
+                            child: _navHelperEndText,
                         )
                     else
                         SizedBox(
