@@ -1,3 +1,9 @@
+## [2.0.0] - 23.05.2021
+
+# Null safety support :tada:
+- changed init screen widget and example to use null safety
+- refactored init screen widget and added a value notifier for default step indicators
+
 ## [1.2.1] - 04.06.2020
 
 # Fix Navigation Helpers
