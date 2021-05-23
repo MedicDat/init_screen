@@ -73,7 +73,7 @@ class InitScreenState extends State<InitScreen> {
 
   // build step button list
   _buildStepButtonList() {
-    return List<Widget?>.generate(
+    return List<Widget>.generate(
         widget.children.length, (index) => _buildStepButton(index));
   }
 
