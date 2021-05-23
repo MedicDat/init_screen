@@ -1,11 +1,6 @@
 # init_screen
 
-An easy to use, multipurpose init screen to introduce your app
-
-**WARNING**  
-If you don't supply a custom NavButton you have to add the Material Design Icon package.  
-Just add `material_design_icons_flutter: any` to your dependencies in your pubspec.
-
+An easy-to-use, multipurpose init screen to introduce your app
 ## Example usage
 
 The most basic example would be to return the InitScreen class, for example in your login activity:
@@ -18,7 +13,7 @@ build(BuildContext context) {
 
 ```
 
-This creates a init screen and displays its' three children.  
+This creates an init screen and displays its three children.  
 You can throw in any Widget you like but be aware that InitScreen just centers them.  
 You must supply a layout yourself.
 
@@ -26,7 +21,7 @@ You must supply a layout yourself.
 You can change a lot of behavior and stuff surrounding the InitScreen class.  
 For a complete list please see the InitScreen class.
 
-But heres an example of how to change the NavButtons:
+But here,s an example of how to change the NavButtons:
 
 ```dart
 class MyInitScreen extends State<MyHomePage> {
