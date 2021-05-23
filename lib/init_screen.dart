@@ -1,7 +1,6 @@
 library init_screen;
 
 import 'package:flutter/material.dart';
-import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 
 /// An easy to use, multipurpose init screen to introduce your app
 class InitScreen extends StatefulWidget {
@@ -27,7 +26,7 @@ class InitScreen extends StatefulWidget {
   InitScreen(
       {required this.children,
       this.key,
-      this.stepIcon = const Icon(MdiIcons.circle),
+      this.stepIcon = const Icon(Icons.circle),
       this.noGoBack = false,
       this.sensitivity = 1000,
       this.showNavButtons = true,
